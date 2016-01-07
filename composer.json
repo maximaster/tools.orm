@@ -1,0 +1,25 @@
+{
+  "name": "maximaster/tools.orm",
+  "description": "Библиотека предоставляет инструменты для работы с инфоблоками через ORM d7",
+  "keywords": ["bitrix", "1С Битрикс", "максимастер", "orm", "d7"],
+  "license": "MIT",
+  "version": "0.7",
+  "support": {
+    "www": "http://www.maximaster.ru",
+    "source": "https://github.com/maximaster/tools.orm.git"
+  },
+  "authors": [
+    {
+      "name": "Журов Михаил",
+      "email": "m.zhurov@maximaster.ru"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Maximaster\\": "src/Maximaster/"
+    }
+  }
+}
