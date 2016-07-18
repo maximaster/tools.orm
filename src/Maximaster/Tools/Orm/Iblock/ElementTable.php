@@ -154,7 +154,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                     case 'L':
 
                         $valueReference = array(
-                            '=this.ID' => 'ref.PROPERTY_ID',
+                            '=ref.PROPERTY_ID' => new SqlExpression('?i', $prop['ID']),
                             "=this.{$realValueStorage}" => 'ref.ID'
                         );
 
