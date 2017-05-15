@@ -6,6 +6,7 @@ use Bitrix\Main\ArgumentException;
 use Maximaster\Tools\Helpers\IblockStructure;
 use Maximaster\Tools\Interfaces\IblockRelatedTableInterface;
 use Bitrix\Main\Entity;
+use Maximaster\Tools\Orm\Query;
 
 class SectionTable extends \Bitrix\Iblock\SectionTable implements IblockRelatedTableInterface
 {
@@ -47,6 +48,16 @@ class SectionTable extends \Bitrix\Iblock\SectionTable implements IblockRelatedT
 
         return $map;
 
+    }
+
+    /**
+     * Подмена встроенного запроса на модифицированный
+     *
+     * @return Query
+     */
+    public static function query()
+    {
+        return new Query(static::getEntity());
     }
 
     /**
