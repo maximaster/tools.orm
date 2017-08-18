@@ -5,6 +5,9 @@ namespace Maximaster\Tools\Helpers;
 use Bitrix\Iblock\IblockTable;
 use Bitrix\Iblock\PropertyTable;
 use Bitrix\Main\ArgumentException;
+use Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
 
 class IblockStructure
 {
@@ -12,7 +15,7 @@ class IblockStructure
     {
         if (!$primary)
         {
-            throw new ArgumentException('Не указан идентификатор инфоблока');
+            throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_MISSING_IBLOCK_ID"));
         }
 
         $cache = new \CPHPCache();
@@ -29,12 +32,12 @@ class IblockStructure
             if ($db->getSelectedRowsCount() == 0)
             {
                 $cache->AbortDataCache();
-                throw new ArgumentException('Указан идентификатор несуществующего инфоблока');
+                throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_WRONG_IBLOCK_ID"));
             }
             elseif ($db->getSelectedRowsCount() > 1)
             {
                 $cache->AbortDataCache();
-                throw new ArgumentException("Существует {$db->getSelectedRowsCount()} инфоблока(ов) с {$field} = {$primary}");
+                throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_IBLOCK_MULTIPLE_FIELDS", array('#CNT#' => $db->getSelectedRowsCount(), '#FIELD#' => $field, '#PRIMARY#' => $primary)));
             }
 
             $iblock = $db->fetch();
@@ -54,7 +57,7 @@ class IblockStructure
     {
         if (!$primary)
         {
-            throw new ArgumentException('Не указан идентификатор инфоблока');
+            throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_MISSING_IBLOCK_ID"));
         }
 
         $cache = new \CPHPCache();
@@ -75,12 +78,12 @@ class IblockStructure
                 $code = $prop['CODE'];
                 if (isset($props[ $code ]))
                 {
-                    throw new \LogicException("В инфоблокe {$primary} свойство {$code} используется дважды");
+                    throw new \LogicException(Loc::getMessage('MAXIMASTER_TOOLS_IBLOCK_DUPLICATE_PROPERTY_CODE', array('#PRIMARY#' => $primary, '#CODE#' => $code)));
                 }
 
                 if (strlen($code) === 0)
                 {
-                    throw new \LogicException("В инфоблоке {$primary} для свойства {$prop['NAME']} не задан символьный код");
+                    throw new \LogicException(Loc::getMessage('MAXIMASTER_TOOLS_IBLOCK_MISSING_PROPERTY_CODE', array('#PRIMARY#' => $primary, '#PROP#' => $prop['NAME'])));
                 }
 
                 $props[ $code ] = $prop;
@@ -100,7 +103,7 @@ class IblockStructure
     {
         if (!$primary)
         {
-            throw new ArgumentException('Не указан идентификатор инфоблока');
+            throw new ArgumentException(Loc::getMessage('MAXIMASTER_TOOLS_MISSING_IBLOCK_ID'));
         }
 
         $cache = new \CPHPCache();

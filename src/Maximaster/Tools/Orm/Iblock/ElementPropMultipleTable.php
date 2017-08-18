@@ -3,6 +3,9 @@ namespace Maximaster\Tools\Orm\Iblock;
 use Bitrix\Main\Entity;
 use Bitrix\Main;
 use Maximaster\Tools\Helpers\IblockStructure;
+use Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
 
 abstract class ElementPropMultipleTable extends Entity\DataManager
 {
@@ -71,7 +74,7 @@ abstract class ElementPropMultipleTable extends Entity\DataManager
         $iblock = IblockStructure::iblock($iblockCode);
         if (!$iblock)
         {
-            throw new Main\ArgumentException('Указан код несуществующего инфоблока');
+            throw new Main\ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_WRONG_IBLOCK_CODE"));
         }
 
         self::$iblockCode = $iblockCode;

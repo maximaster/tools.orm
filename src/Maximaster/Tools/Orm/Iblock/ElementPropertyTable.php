@@ -3,6 +3,9 @@
 namespace Maximaster\Tools\Orm\Iblock;
 
 use Bitrix\Main\Entity;
+use Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
 
 class ElementPropertyTable extends Entity\DataManager
 {
@@ -18,15 +21,15 @@ class ElementPropertyTable extends Entity\DataManager
                 'data_type' => 'integer',
                 'primary' => true,
                 'autocomplete' => true,
-                'title' => 'Идентификатор значения свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_VALUE_ID"),
             ),
             'IBLOCK_PROPERTY_ID' => array(
                 'data_type' => 'integer',
-                'title' => 'Идентификатор свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ID"),
             ),
             'IBLOCK_ELEMENT_ID' => array(
                 'data_type' => 'integer',
-                'title' => 'Идентификатор элемента',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_ELEMENT_ID"),
             ),
             'PROPERTY' => array(
                 'data_type' => 'Bitrix\Iblock\PropertyTable',
@@ -34,23 +37,23 @@ class ElementPropertyTable extends Entity\DataManager
             ),
             'VALUE' => array(
                 'data_type' => 'string',
-                'title' => 'Значение свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_VALUE"),
             ),
             'VALUE_TYPE' => array(
                 'data_type' => 'string',
-                'title' => 'Тип свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_TYPE"),
             ),
             'VALUE_ENUM' => array(
                 'data_type' => 'integer',
-                'title' => 'Значение свойства типа "Список"',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ENUM_VALUE"),
             ),
             'VALUE_NUM' => array(
                 'data_type' => 'float',
-                'title' => 'Числовое значение свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ENUM_NUM"),
             ),
             'DESCRIPTION' => array(
                 'data_type' => 'string',
-                'title' => 'Описание значения свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_DESCRIPTION"),
             ),
             new Entity\ReferenceField(
                 'PROPERTY',
