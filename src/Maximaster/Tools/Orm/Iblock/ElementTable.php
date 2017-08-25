@@ -62,8 +62,8 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
 
         if (!$isOldProps)
         {
-            $singleProp = ElementPropSingleTable::getInstance($iblock['CODE'])->getEntity()->getDataClass();
-            $multipleProp = ElementPropMultipleTable::getInstance($iblock['CODE'])->getEntity()->getDataClass();
+            $singleProp = ElementPropSingleTable::getInstance($iblock['ID'])->getEntity()->getDataClass();
+            $multipleProp = ElementPropMultipleTable::getInstance($iblock['ID'])->getEntity()->getDataClass();
         }
         else
         {
