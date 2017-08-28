@@ -120,12 +120,13 @@ class Query extends \Bitrix\Main\Entity\Query
         $maps = func_get_args();
         if (count($maps) === 0) return;
 
+        $entity = property_exists($this, 'init_entity') ? $this->init_entity : $this->entity;
         //TODO Проверить на повторяющиеся свойства и сущности, т.к. запрос может вызываться для двух инфоблоков
         foreach ($maps as $map)
         {
             foreach ($map as $field)
             {
-                $this->init_entity->addField($field);
+                $entity->addField($field);
             }
         }
     }
