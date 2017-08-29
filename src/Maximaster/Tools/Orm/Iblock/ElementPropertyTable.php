@@ -28,10 +28,6 @@ class ElementPropertyTable extends Entity\DataManager
                 'data_type' => 'integer',
                 'title' => 'Идентификатор элемента',
             ),
-            'PROPERTY' => array(
-                'data_type' => 'Bitrix\Iblock\PropertyTable',
-                'reference' => array('=this.IBLOCK_PROPERTY_ID' => 'ref.ID'),
-            ),
             'VALUE' => array(
                 'data_type' => 'string',
                 'title' => 'Значение свойства',
