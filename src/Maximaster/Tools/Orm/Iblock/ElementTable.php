@@ -122,7 +122,9 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                         $entityName = '\\' . __CLASS__;
                         if ($prop['LINK_IBLOCK_ID'])
                         {
-                            $entityName = self::compileEntity($prop['LINK_IBLOCK_ID'])->getDataClass();
+	                        $entityName = $iblockId == $prop['LINK_IBLOCK_ID']
+		                        ? get_called_class()
+		                        : self::compileEntity($prop['LINK_IBLOCK_ID'])->getDataClass();
                             $valueReference['=ref.IBLOCK_ID'] = new SqlExpression('?i', $prop['LINK_IBLOCK_ID']);
                         }
 
