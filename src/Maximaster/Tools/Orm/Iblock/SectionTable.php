@@ -7,6 +7,9 @@ use Maximaster\Tools\Helpers\IblockStructure;
 use Maximaster\Tools\Interfaces\IblockRelatedTableInterface;
 use Bitrix\Main\Entity;
 use Maximaster\Tools\Orm\Query;
+use Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
 
 class SectionTable extends \Bitrix\Iblock\SectionTable implements IblockRelatedTableInterface
 {
@@ -70,7 +73,7 @@ class SectionTable extends \Bitrix\Iblock\SectionTable implements IblockRelatedT
         $iblock = IblockStructure::iblock($iblockId);
         if (!$iblock)
         {
-            throw new ArgumentException('Указан несуществующий идентификатор инфоблока');
+            throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_WRONG_IBLOCK_ID"));
         }
 
         $entityName = "Iblock" . Entity\Base::snake2camel($iblockId) . "SectionTable";

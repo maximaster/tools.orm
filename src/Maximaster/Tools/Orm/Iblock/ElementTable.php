@@ -8,7 +8,9 @@ use Bitrix\Main\Entity;
 use Maximaster\Tools\Helpers\IblockStructure;
 use Maximaster\Tools\Interfaces\IblockRelatedTableInterface;
 use Maximaster\Tools\Orm\Query;
+use Bitrix\Main\Localization\Loc;
 
+Loc::loadMessages(__FILE__);
 
 class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedTableInterface
 {
@@ -60,8 +62,8 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
 
         if (!$isOldProps)
         {
-            $singleProp = ElementPropSingleTable::getInstance($iblock['CODE'])->getEntity()->getDataClass();
-            $multipleProp = ElementPropMultipleTable::getInstance($iblock['CODE'])->getEntity()->getDataClass();
+            $singleProp = ElementPropSingleTable::getInstance($iblock['ID'])->getEntity()->getDataClass();
+            $multipleProp = ElementPropMultipleTable::getInstance($iblock['ID'])->getEntity()->getDataClass();
         }
         else
         {
@@ -324,17 +326,17 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
 
     public static function add(array $data)
     {
-        throw new \LogicException('Используйте \\Bitrix\\Iblock\\ElementTable');
+        throw new \LogicException(Loc::getMessage("MAXIMASTER_TOOLS_USE_ELEMENT_TABLE"));
     }
 
     public static function update($primary, array $data)
     {
-        throw new \LogicException('Используйте \\Bitrix\\Iblock\\ElementTable');
+        throw new \LogicException(Loc::getMessage('MAXIMASTER_TOOLS_USE_ELEMENT_TABLE'));
     }
 
     public static function delete($primary)
     {
-        throw new \LogicException('Используйте \\Bitrix\\Iblock\\ElementTable');
+        throw new \LogicException(Loc::getMessage('MAXIMASTER_TOOLS_USE_ELEMENT_TABLE'));
     }
 
     /**
@@ -347,7 +349,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
         $iblock = IblockStructure::iblock($iblockId);
         if (!$iblock)
         {
-            throw new ArgumentException('Указан несуществующий идентификатор инфоблока');
+            throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_WRONG_IBLOCK_ID"));
         }
 
         $entityName = "Iblock" . Entity\Base::snake2camel($iblockId) . "ElementTable";

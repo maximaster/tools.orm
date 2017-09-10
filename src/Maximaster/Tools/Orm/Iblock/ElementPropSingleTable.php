@@ -6,6 +6,9 @@ use Bitrix\Main\ArgumentException;
 use Bitrix\Main\Entity\Base;
 use Bitrix\Main\Entity;
 use Maximaster\Tools\Helpers\IblockStructure;
+use Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
 
 class ElementPropSingleTable extends Entity\DataManager
 {
@@ -82,7 +85,7 @@ class ElementPropSingleTable extends Entity\DataManager
         $iblock = IblockStructure::iblock($iblockCode);
         if (!$iblock)
         {
-            throw new ArgumentException('Указан код несуществующего инфоблока');
+            throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_WRONG_IBLOCK_CODE"));
         }
 
         self::$iblockCode = $iblockCode;

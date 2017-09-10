@@ -2,20 +2,24 @@
 
 namespace Maximaster\Tools\Orm\Iblock;
 
+use Bitrix\Main\Localization\Loc;
+
+Loc::loadMessages(__FILE__);
+
 class PropertyEnumTable
 {
     public static function getMap()
     {
-        $map = array(
+        return array(
             'ID' => array(
                 'data_type' => 'integer',
                 'primary' => true,
                 'autocomplete' => true,
-                'title' => 'Идентификатор значения свойства типа "Список"',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ENUM_ID"),
             ),
             'PROPERTY_ID' => array(
                 'data_type' => 'integer',
-                'title' => 'Идентификатор свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ENUM_PROPERTY_ID"),
             ),
             'PROPERTY' => array(
                 'data_type' => 'Bitrix\Iblock\PropertyTable',
@@ -23,20 +27,20 @@ class PropertyEnumTable
             ),
             'VALUE' => array(
                 'data_type' => 'string',
-                'title' => 'Значение свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ENUM_VALUE"),
             ),
             'DEF' => array(
                 'data_type' => 'boolean',
                 'values' => array('N','Y'),
-                'title' => 'По умолчанию',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ENUM_DEF"),
             ),
             'SORT' => array(
                 'data_type' => 'integer',
-                'title' => 'Сортировка',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ENUM_SORT"),
             ),
             'XML_ID' => array(
                 'data_type' => 'string',
-                'title' => 'Код значения свойства',
+                'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_ENUM_XML_ID"),
             ),
             'TMP_ID' => array(
                 'data_type' => 'string',
