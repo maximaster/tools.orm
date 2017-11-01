@@ -37,7 +37,7 @@ class SectionTable extends \Bitrix\Iblock\SectionTable implements IblockRelatedT
 
         foreach (self::getAdditionalMap() as $key => $mapItem)
         {
-            $map[] = $mapItem;
+            $map[ $key ] = $mapItem;
         }
 
         return $map;

@@ -56,7 +56,7 @@ abstract class ElementPropMultipleTable extends Entity\DataManager
             'VALUE_NUM' => array(
                 'data_type' => 'float',
             ),
-            new Entity\ReferenceField(
+            'PROPERTY' => new Entity\ReferenceField(
                 'PROPERTY',
                 '\Bitrix\Iblock\Property',
                 array('this.IBLOCK_PROPERTY_ID' => 'ref.ID')

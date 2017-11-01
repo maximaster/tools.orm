@@ -29,7 +29,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
 
         foreach (self::getAdditionalMap() as $key => $mapItem)
         {
-            $map[] = $mapItem;
+            $map[ $key ] = $mapItem;
         }
 
         return $map;

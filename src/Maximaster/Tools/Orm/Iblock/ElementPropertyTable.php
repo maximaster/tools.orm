@@ -51,7 +51,7 @@ class ElementPropertyTable extends Entity\DataManager
                 'data_type' => 'string',
                 'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_DESCRIPTION"),
             ),
-            new Entity\ReferenceField(
+            'PROPERTY' => new Entity\ReferenceField(
                 'PROPERTY',
                 '\Bitrix\Iblock\Property',
                 array('this.IBLOCK_PROPERTY_ID' => 'ref.ID')

@@ -28,41 +28,45 @@ class ElementPropSingleTable extends Entity\DataManager
                 'primary' => true,
             )
         );
+
         $properties = IblockStructure::properties(static::$iblockCode);
-        if (!$properties) return $map;
+        if (!$properties) {
+            return $map;
+        }
 
-        foreach ($properties as $prop)
-        {
-            if ($prop['MULTIPLE'] == 'Y') continue;
+        foreach ($properties as $prop) {
+            if ($prop['MULTIPLE'] == 'Y') {
+                continue;
+            }
 
-            $code = $prop['CODE'];
             $id = $prop['ID'];
+            $fieldName = $columnName = 'PROPERTY_' . $id;
 
             switch ($prop['PROPERTY_TYPE']) {
                 case 'N':
-                    $mapItem = new Entity\FloatField('PROPERTY_' . $id, array(
-                        'column_name' => 'PROPERTY_' . $id,
+                    $mapItem = new Entity\FloatField($fieldName, array(
+                        'column_name' => $columnName,
                     ));
                     break;
 
                 case 'L':
                 case 'E':
                 case 'G':
-                    $mapItem = new Entity\IntegerField('PROPERTY_' . $id, array(
-                        'column_name' => 'PROPERTY_' . $id
+                    $mapItem = new Entity\IntegerField($fieldName, array(
+                        'column_name' => $columnName,
                     ));
                     break;
 
                 case 'S':
                 default:
-                    $mapItem = new Entity\StringField('PROPERTY_' . $id, array(
-                        'column_name' => 'PROPERTY_' . $id,
+                    $mapItem = new Entity\StringField($fieldName, array(
+                        'column_name' => $columnName,
                     ));
 
                     break;
             }
 
-            $map[ $code ] = $mapItem;
+            $map[ $fieldName ] = $mapItem;
 
             if ($prop['WITH_DESCRIPTION'] == 'Y')
             {
