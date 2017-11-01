@@ -83,7 +83,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
             $propValueShortcut              = "PROPERTY_{$propCode}_VALUE";
             $propValueDescriptionShortcut   = "PROPERTY_{$propCode}_DESCRIPTION";
             $concatSubquery                 = "GROUP_CONCAT(%s SEPARATOR '" .  static::$concatSeparator . "')";
-            $propValueColumn                = $isMultiple || $isOldProps ? 'VALUE' : "PROPERTY_{$propId}";
+            $propValueColumn                = $isMultiple || $isOldProps ? 'VALUE' : $propCode;
             $valueReference = $valueEntity = $fieldReference = null;
 
             /**
