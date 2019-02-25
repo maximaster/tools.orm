@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Maximaster\Tools\Orm\Iblock;
 use Bitrix\Main\Entity;
 use Bitrix\Main;
