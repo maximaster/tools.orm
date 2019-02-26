@@ -164,7 +164,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
 
                         $valueEntity = new Entity\ReferenceField(
                             $propValueShortcut,
-                            \Bitrix\Iblock\PropertyEnumerationTable::class,
+                            '\Bitrix\Iblock\PropertyEnumerationTable',
                             $valueReference
                         );
 
@@ -178,15 +178,14 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                             $realValueStorage
                         );
                         break;
-
                      case 'F':
-                           $valueReference = array(
+                        $valueReference = array(
                             "=this.{$realValueStorage}" => 'ref.ID'
                         );
 
                         $valueEntity = new Entity\ReferenceField(
                             $propValueShortcut,
-                            \Bitrix\Main\FileTable::class,
+                            '\Bitrix\Main\FileTable',
                             $valueReference
                         );
 
