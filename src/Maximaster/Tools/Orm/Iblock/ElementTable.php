@@ -171,18 +171,33 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                         break;
                     case 'S':
                     case 'N':
+
                         $valueEntity = new Entity\ExpressionField(
                             $propValueShortcut,
                             '%s',
                             $realValueStorage
                         );
                         break;
+                     case 'F':
+                        $valueReference = array(
+                            "=this.{$realValueStorage}" => 'ref.ID'
+                        );
+
+                        $valueEntity = new Entity\ReferenceField(
+                            $propValueShortcut,
+                            '\Bitrix\Main\FileTable',
+                            $valueReference
+                        );
+
+                        break;
                     default:
                         break;
                 }
             }
 
-            if (!$valueEntity) continue;
+            if (!$valueEntity) {
+                continue;
+            }
 
             /**
              * Для всех свойств, кроме одиночных 2.0
