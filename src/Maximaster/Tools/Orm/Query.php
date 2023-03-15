@@ -3,7 +3,6 @@
 namespace Maximaster\Tools\Orm;
 
 use Maximaster\Tools\Helpers\IblockStructure;
-use Maximaster\Tools\Interfaces\IblockRelatedTableInterface;
 use Maximaster\Tools\Orm\Iblock\ElementTable;
 
 /**
@@ -28,7 +27,7 @@ class Query extends \Bitrix\Main\Entity\Query
         return $this->useIblockSearch;
     }
 
-    protected function buildQuery()
+    protected function buildQuery($forceObjectPrimary = true)
     {
         if ($this->useIblockSearch())
         {
@@ -40,7 +39,7 @@ class Query extends \Bitrix\Main\Entity\Query
             $this->filter['IBLOCK_ID'] = $entityClass::getIblockId();
         }
 
-        return parent::buildQuery();
+        return parent::buildQuery($forceObjectPrimary);
     }
 
     /**
