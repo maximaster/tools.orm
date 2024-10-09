@@ -21,7 +21,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
         return null;
     }
 
-    public static function getMap()
+    public static function getMap(): array
     {
         if (static::getIblockId() === null) return parent::getMap();
 
@@ -341,17 +341,17 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
         return new Query(static::getEntity());
     }
 
-    public static function add(array $data)
+    public static function add(array $data): \Bitrix\Main\ORM\Data\AddResult
     {
         throw new \LogicException(Loc::getMessage("MAXIMASTER_TOOLS_USE_ELEMENT_TABLE"));
     }
 
-    public static function update($primary, array $data)
+    public static function update($primary, array $data): \Bitrix\Main\ORM\Data\UpdateResult
     {
         throw new \LogicException(Loc::getMessage('MAXIMASTER_TOOLS_USE_ELEMENT_TABLE'));
     }
 
-    public static function delete($primary)
+    public static function delete($primary): \Bitrix\Main\ORM\Data\DeleteResult
     {
         throw new \LogicException(Loc::getMessage('MAXIMASTER_TOOLS_USE_ELEMENT_TABLE'));
     }
