@@ -3,9 +3,9 @@
 namespace Maximaster\Tools\Orm\Iblock;
 
 use Bitrix\Main\ArgumentException;
+use Bitrix\Main\ORM\Entity;
 use Maximaster\Tools\Helpers\IblockStructure;
 use Maximaster\Tools\Interfaces\IblockRelatedTableInterface;
-use Bitrix\Main\Entity;
 use Maximaster\Tools\Orm\Query;
 use Bitrix\Main\Localization\Loc;
 
@@ -65,7 +65,7 @@ class SectionTable extends \Bitrix\Iblock\SectionTable implements IblockRelatedT
 
     /**
      * @param $iblockId
-     * @return Entity\Base
+     * @return Entity
      * @throws ArgumentException
      */
     public static function compileEntity($iblockId)
@@ -76,7 +76,7 @@ class SectionTable extends \Bitrix\Iblock\SectionTable implements IblockRelatedT
             throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_WRONG_IBLOCK_ID"));
         }
 
-        $entityName = "Iblock" . Entity\Base::snake2camel($iblockId) . "SectionTable";
+        $entityName = "Iblock" . Entity::snake2camel($iblockId) . "SectionTable";
         $fullEntityName = '\\' . __NAMESPACE__ . '\\' . $entityName;
 
         $code = "
@@ -92,6 +92,6 @@ class SectionTable extends \Bitrix\Iblock\SectionTable implements IblockRelatedT
         ";
         if (!class_exists($fullEntityName)) eval($code);
 
-        return Entity\Base::getInstance($fullEntityName);
+        return Entity::getInstance($fullEntityName);
     }
 }

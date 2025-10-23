@@ -1,13 +1,15 @@
 <?php
 namespace Maximaster\Tools\Orm\Iblock;
-use Bitrix\Main\Entity;
+
 use Bitrix\Main;
+use Bitrix\Main\ORM\Data\DataManager;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Maximaster\Tools\Helpers\IblockStructure;
 use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);
 
-abstract class ElementPropMultipleTable extends Entity\DataManager
+abstract class ElementPropMultipleTable extends DataManager
 {
     protected static $iblockId;
     protected static $iblockCode;
@@ -56,7 +58,7 @@ abstract class ElementPropMultipleTable extends Entity\DataManager
             'VALUE_NUM' => array(
                 'data_type' => 'float',
             ),
-            'PROPERTY' => new Entity\ReferenceField(
+            'PROPERTY' => new Reference(
                 'PROPERTY',
                 '\Bitrix\Iblock\Property',
                 array('this.IBLOCK_PROPERTY_ID' => 'ref.ID')
@@ -66,7 +68,7 @@ abstract class ElementPropMultipleTable extends Entity\DataManager
 
     /**
      * @param $iblockCode
-     * @return Entity\DataManager
+     * @return DataManager
      * @throws Main\ArgumentException
      */
     public static function getInstance($iblockCode)
