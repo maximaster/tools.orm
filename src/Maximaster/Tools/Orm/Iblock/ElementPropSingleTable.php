@@ -3,14 +3,16 @@
 namespace Maximaster\Tools\Orm\Iblock;
 
 use Bitrix\Main\ArgumentException;
-use Bitrix\Main\Entity\Base;
-use Bitrix\Main\Entity;
+use Bitrix\Main\ORM\Data\DataManager;
+use Bitrix\Main\ORM\Fields\FloatField;
+use Bitrix\Main\ORM\Fields\IntegerField;
+use Bitrix\Main\ORM\Fields\StringField;
 use Maximaster\Tools\Helpers\IblockStructure;
 use Bitrix\Main\Localization\Loc;
 
 Loc::loadMessages(__FILE__);
 
-class ElementPropSingleTable extends Entity\DataManager
+class ElementPropSingleTable extends DataManager
 {
     protected static $iblockCode;
     protected static $iblockId;
@@ -44,7 +46,7 @@ class ElementPropSingleTable extends Entity\DataManager
 
             switch ($prop['PROPERTY_TYPE']) {
                 case 'N':
-                    $mapItem = new Entity\FloatField($fieldName, array(
+                    $mapItem = new FloatField($fieldName, array(
                         'column_name' => $columnName,
                     ));
                     break;
@@ -52,14 +54,14 @@ class ElementPropSingleTable extends Entity\DataManager
                 case 'L':
                 case 'E':
                 case 'G':
-                    $mapItem = new Entity\IntegerField($fieldName, array(
+                    $mapItem = new IntegerField($fieldName, array(
                         'column_name' => $columnName,
                     ));
                     break;
 
                 case 'S':
                 default:
-                    $mapItem = new Entity\StringField($fieldName, array(
+                    $mapItem = new StringField($fieldName, array(
                         'column_name' => $columnName,
                     ));
 
@@ -70,7 +72,7 @@ class ElementPropSingleTable extends Entity\DataManager
 
             if ($prop['WITH_DESCRIPTION'] == 'Y')
             {
-                $map[ 'DESCRIPTION_' . $id ] = new Entity\StringField('DESCRIPTION_' . $id, array(
+                $map[ 'DESCRIPTION_' . $id ] = new StringField('DESCRIPTION_' . $id, array(
                     'column_name' => 'DESCRIPTION_' . $id,
                 ));
             }
@@ -81,7 +83,7 @@ class ElementPropSingleTable extends Entity\DataManager
 
     /**
      * @param $iblockCode
-     * @return Entity\DataManager
+     * @return DataManager
      * @throws ArgumentException
      */
     public static function getInstance($iblockCode)

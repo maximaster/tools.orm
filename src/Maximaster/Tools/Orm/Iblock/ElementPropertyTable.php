@@ -2,12 +2,13 @@
 
 namespace Maximaster\Tools\Orm\Iblock;
 
-use Bitrix\Main\Entity;
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\ORM\Data\DataManager;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
 
 Loc::loadMessages(__FILE__);
 
-class ElementPropertyTable extends Entity\DataManager
+class ElementPropertyTable extends DataManager
 {
     public static function getTableName()
     {
@@ -51,7 +52,7 @@ class ElementPropertyTable extends Entity\DataManager
                 'data_type' => 'string',
                 'title' => Loc::getMessage("MAXIMASTER_TOOLS_PROPERTY_DESCRIPTION"),
             ),
-            'PROPERTY' => new Entity\ReferenceField(
+            'PROPERTY' => new Reference(
                 'PROPERTY',
                 '\Bitrix\Iblock\Property',
                 array('this.IBLOCK_PROPERTY_ID' => 'ref.ID')

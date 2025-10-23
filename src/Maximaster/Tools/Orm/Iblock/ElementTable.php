@@ -4,7 +4,10 @@ namespace Maximaster\Tools\Orm\Iblock;
 
 use Bitrix\Main\ArgumentException;
 use Bitrix\Main\DB\SqlExpression;
-use Bitrix\Main\Entity;
+use Bitrix\Main\ORM\Entity;
+use Bitrix\Main\ORM\Fields\ExpressionField;
+use Bitrix\Main\ORM\Fields\Field;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Maximaster\Tools\Helpers\IblockStructure;
 use Maximaster\Tools\Interfaces\IblockRelatedTableInterface;
 use Maximaster\Tools\Orm\Query;
@@ -91,7 +94,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
              */
             if (!$isOldProps && !$isMultiple)
             {
-                $map[ $singlePropsEntityName ] = new Entity\ReferenceField(
+                $map[ $singlePropsEntityName ] = new Reference(
                     $singlePropsEntityName,
                     $singleProp,
                     array('=ref.IBLOCK_ELEMENT_ID' => 'this.ID'),
@@ -107,7 +110,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
 
             if ($isMultiple)
             {
-                $valueEntity = new Entity\ExpressionField(
+                $valueEntity = new ExpressionField(
                     $propValueShortcut,
                     $concatSubquery,
                     $realValueStorage
@@ -130,7 +133,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                             $valueReference['=ref.IBLOCK_ID'] = new SqlExpression('?i', $prop['LINK_IBLOCK_ID']);
                         }
 
-                        $valueEntity = new Entity\ReferenceField(
+                        $valueEntity = new Reference(
                             $propValueShortcut,
                             $entityName,
                             $valueReference
@@ -147,7 +150,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                             $valueReference['=ref.IBLOCK_ID'] = new SqlExpression('?i', $prop['LINK_IBLOCK_ID']);
                         }
 
-                        $valueEntity = new Entity\ReferenceField(
+                        $valueEntity = new Reference(
                             $propValueShortcut,
                             $entityName,
                             $valueReference
@@ -162,7 +165,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                             "=this.{$realValueStorage}" => 'ref.ID'
                         );
 
-                        $valueEntity = new Entity\ReferenceField(
+                        $valueEntity = new Reference(
                             $propValueShortcut,
                             '\Bitrix\Iblock\PropertyEnumerationTable',
                             $valueReference
@@ -172,7 +175,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                     case 'S':
                     case 'N':
 
-                        $valueEntity = new Entity\ExpressionField(
+                        $valueEntity = new ExpressionField(
                             $propValueShortcut,
                             '%s',
                             $realValueStorage
@@ -183,7 +186,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                             "=this.{$realValueStorage}" => 'ref.ID'
                         );
 
-                        $valueEntity = new Entity\ReferenceField(
+                        $valueEntity = new Reference(
                             $propValueShortcut,
                             '\Bitrix\Main\FileTable',
                             $valueReference
@@ -207,7 +210,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                 /**
                  * Цепляем таблицу со значением свойства
                  */
-                $map[ $propTableEntityName ] = new Entity\ReferenceField(
+                $map[ $propTableEntityName ] = new Reference(
                     $propTableEntityName,
                     $isNewMultiple ? $multipleProp : $singleProp,
                     array(
@@ -228,7 +231,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                  */
                 if ($useDescription)
                 {
-                    $e = new Entity\ExpressionField(
+                    $e = new ExpressionField(
                         $propValueDescriptionShortcut,
                         $isMultiple ? $concatSubquery : '%s',
                         "{$propTableEntityName}.DESCRIPTION"
@@ -243,7 +246,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                 /**
                  * Цепляем таблицу со значением свойства. Она уже подцеплена, но для совместимости...
                  */
-                $map[ $propTableEntityName ] = new Entity\ReferenceField(
+                $map[ $propTableEntityName ] = new Reference(
                     $propTableEntityName,
                     $singleProp,
                     array('=ref.IBLOCK_ELEMENT_ID' => 'this.ID'),
@@ -260,7 +263,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
                  */
                 if ($useDescription)
                 {
-                    $map[ $propValueDescriptionShortcut ] = new Entity\ExpressionField(
+                    $map[ $propValueDescriptionShortcut ] = new ExpressionField(
                         $propValueDescriptionShortcut,
                         '%s',
                         "{$singlePropsEntityName}.DESCRIPTION_{$propId}"
@@ -272,7 +275,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
         /**
          * Добавим DETAIL_PAGE_URL
          */
-        $e = new Entity\ExpressionField('DETAIL_PAGE_URL', '%s', 'IBLOCK.DETAIL_PAGE_URL');
+        $e = new ExpressionField('DETAIL_PAGE_URL', '%s', 'IBLOCK.DETAIL_PAGE_URL');
         $e->addFetchDataModifier(function($value, $query, $entry, $fieldName)
         {
             $search = array();
@@ -311,10 +314,10 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
 
     /**
      * @param array        $prop
-     * @param Entity\Field $tableField
-     * @return Entity\ExpressionField
+     * @param Field $tableField
+     * @return ExpressionField
      */
-    private static function linkPropertyValue(array $prop, Entity\Field &$tableField)
+    private static function linkPropertyValue(array $prop, Field &$tableField)
     {
         $propValueShortcut = "PROPERTY_{$prop['CODE']}_VALUE";
         $isMultiple = $prop['MULTIPLE'] == 'Y';
@@ -322,7 +325,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
         $concatSubquery = "GROUP_CONCAT(%s SEPARATOR '" .  static::$concatSeparator . "')";
         $propValueColumn = $isMultiple || $isOldProps ? 'VALUE' : "PROPERTY_{$prop['ID']}";
 
-        $mapEntity = new Entity\ExpressionField(
+        $mapEntity = new ExpressionField(
             $propValueShortcut,
             $isMultiple ? $concatSubquery : '%s',
             "{$tableField->getName()}.{$propValueColumn}"
@@ -358,7 +361,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
 
     /**
      * @param $iblockId
-     * @return Entity\Base
+     * @return Entity
      * @throws ArgumentException
      */
     public static function compileEntity($iblockId)
@@ -369,7 +372,7 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
             throw new ArgumentException(Loc::getMessage("MAXIMASTER_TOOLS_WRONG_IBLOCK_ID"));
         }
 
-        $entityName = "Iblock" . Entity\Base::snake2camel($iblockId) . "ElementTable";
+        $entityName = "Iblock" . Entity::snake2camel($iblockId) . "ElementTable";
         $fullEntityName = '\\' . __NAMESPACE__ . '\\' . $entityName;
 
         $code = "
@@ -382,6 +385,6 @@ class ElementTable extends \Bitrix\Iblock\ElementTable implements IblockRelatedT
         ";
         if (!class_exists($fullEntityName)) eval($code);
 
-        return Entity\Base::getInstance($fullEntityName);
+        return Entity::getInstance($fullEntityName);
     }
 }

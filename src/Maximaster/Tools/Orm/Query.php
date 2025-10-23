@@ -9,7 +9,7 @@ use Maximaster\Tools\Orm\Iblock\ElementTable;
  * Расширенный класс запроса, который может добавить поля в сущность при необходимости
  * @package Maximaster\Tools\Orm
  */
-class Query extends \Bitrix\Main\Entity\Query
+class Query extends \Bitrix\Main\ORM\Query\Query
 {
     /**
      * @var array Массив с идентификаторами и кодами инфоблоков
